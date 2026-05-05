@@ -1,0 +1,11 @@
+# Robots.txt for Youssef Khamis Portfolio
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://yousefkhameselasuoty.pythonanywhere.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10

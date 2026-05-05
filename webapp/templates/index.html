@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>{{ settings.get('site_title', 'Youssef Khamis Al-Assiuty | Frontend Developer') }}</title>
+    
+    <link rel="icon" type="image/svg+xml" href="{{ favicon_uri }}">
+    <link rel="shortcut icon" type="image/svg+xml" href="{{ favicon_uri }}">
+    <link rel="apple-touch-icon" href="{{ favicon_uri }}">
+    
+    <!-- SEO -->
+    <meta name="description" content="Frontend Developer specializing in React, TypeScript, and modern web applications. Building scalable, user-focused digital products.">
+    <meta name="keywords" content="Frontend Developer, React Developer, TypeScript, Web Development, UI/UX, Youssef Khamis">
+    <meta name="author" content="Youssef Khamis Al-Assiuty">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ settings.get('site_title', 'Youssef Khamis Al-Assiuty') }}">
+    <meta property="og:description" content="Frontend Developer specializing in React, TypeScript, and modern web applications.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yousefkhameselasuoty.pythonanywhere.com">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Youssef Khamis Al-Assiuty",
+        "jobTitle": "Frontend Developer",
+        "description": "Frontend Developer specializing in React, TypeScript, and modern web applications.",
+        "url": "https://yousefkhameselasuoty.pythonanywhere.com",
+        "sameAs": [
+            "{{ settings.get('linkedin_url', '') }}",
+            "{{ settings.get('facebook_url', '') }}",
+            "{{ settings.get('instagram_url', '') }}"
+        ]
+    }
+    </script>
+    
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+    
+    <div class="loading-screen" id="loading-screen">
+        <div class="loader">
+            <div class="loader-text"><span>Y</span><span>O</span><span>U</span><span>S</span><span>S</span><span>E</span><span>F</span></div>
+            <div class="loader-bar"><div class="loader-progress"></div></div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo magnetic-btn">
+                <div class="logo-avatar"><img src="/static/profile.jpg" alt="YK" class="nav-profile-img"></div>
+                <span class="logo-text">YK</span><span class="logo-dot"></span>
+            </a>
+            <div class="nav-links" id="nav-links">
+                <a href="#home" class="nav-link active" data-section="home">Home</a>
+                <a href="#about" class="nav-link" data-section="about">About</a>
+                <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+                <a href="#certificates" class="nav-link" data-section="certificates">Certificates</a>
+                <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+                <a href="#process" class="nav-link" data-section="process">Process</a>
+                {% if settings.get('show_testimonials', '0') == '1' and testimonials|length > 0 %}
+                <a href="#testimonials" class="nav-link" data-section="testimonials">Testimonials</a>
+                {% endif %}
+                <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle magnetic-btn" id="theme-toggle" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
+                <a href="#contact" class="nav-cta magnetic-btn"><span>Hire Me</span><i class="fas fa-arrow-right"></i></a>
+                <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobile-nav">
+        <div class="mobile-nav-content">
+            <div class="mobile-nav-profile">
+                <img src="/static/profile.jpg" alt="Youssef Khamis" class="mobile-profile-img">
+                <span class="mobile-profile-name">{{ settings.get('hero_name', 'Youssef Khamis') }}</span>
+            </div>
+            <div class="mobile-nav-links">
+                <a href="#home" class="mobile-nav-link">Home</a>
+                <a href="#about" class="mobile-nav-link">About</a>
+                <a href="#skills" class="mobile-nav-link">Skills</a>
+                <a href="#certificates" class="mobile-nav-link">Certificates</a>
+                <a href="#projects" class="mobile-nav-link">Projects</a>
+                <a href="#contact" class="mobile-nav-link">Contact</a>
+            </div>
+            <div class="mobile-nav-footer">
+                <div class="mobile-social-links">
+                    {% if settings.get('facebook_url') %}<a href="{{ settings.facebook_url }}" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>{% endif %}
+                    {% if settings.get('instagram_url') %}<a href="{{ settings.instagram_url }}" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>{% endif %}
+                    {% if settings.get('linkedin_url') %}<a href="{{ settings.linkedin_url }}" class="social-link" target="_blank"><i class="fab fa-linkedin-in"></i></a>{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <canvas id="particles-canvas"></canvas>
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+            <div class="noise-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-profile-container">
+                <div class="hero-profile-image">
+                    <img src="/static/profile.jpg" alt="Youssef Khamis Al-Assiuty" class="profile-img" id="hero-profile-img">
+                    <div class="profile-glow"></div>
+                    <div class="profile-ring"></div>
+                    <div class="profile-ring-2"></div>
+                    <div class="profile-particles"></div>
+                </div>
+            </div>
+            <div class="hero-badge glass-card"><span class="badge-dot"></span><span>Available for opportunities</span></div>
+            <h1 class="hero-title">
+                <span class="title-line"><span class="title-word" data-text="{{ settings.get('hero_title_1', 'Hi, I\'m') }}">{{ settings.get('hero_title_1', "Hi, I'm") }}</span></span>
+                <span class="title-line title-name"><span class="title-word morphing-text" id="morphing-name">{{ settings.get('hero_name', 'Youssef Khamis') }}</span></span>
+                <span class="title-line"><span class="title-word gradient-text">{{ settings.get('hero_role', 'Frontend Developer') }}</span></span>
+            </h1>
+            <p class="hero-description">{{ settings.get('hero_description', '')|safe }}</p>
+            <div class="hero-cta">
+                <a href="#projects" class="btn btn-primary magnetic-btn"><span>View Projects</span><i class="fas fa-folder-open"></i></a>
+                <a href="#contact" class="btn btn-secondary magnetic-btn"><span>Contact Me</span><i class="fas fa-arrow-right"></i></a>
+            </div>
+            {% if settings.get('show_stats', '0') == '1' %}
+            <div class="hero-stats">
+                <div class="stat-item glass-card">
+                    <span class="stat-number counter" data-target="{{ settings.get('stat_years', '0') }}">0</span><span class="stat-plus">+</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+                <div class="stat-item glass-card">
+                    <span class="stat-number counter" data-target="{{ settings.get('stat_projects', '0') }}">0</span><span class="stat-plus">+</span>
+                    <span class="stat-label">Projects Completed</span>
+                </div>
+                <div class="stat-item glass-card">
+                    <span class="stat-number counter" data-target="{{ settings.get('stat_clients', '0') }}">0</span><span class="stat-plus">+</span>
+                    <span class="stat-label">Happy Clients</span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="hero-social">
+            {% if settings.get('facebook_url') %}<a href="{{ settings.facebook_url }}" class="social-link magnetic-btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>{% endif %}
+            {% if settings.get('instagram_url') %}<a href="{{ settings.instagram_url }}" class="social-link magnetic-btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>{% endif %}
+            {% if settings.get('tiktok_url') %}<a href="{{ settings.tiktok_url }}" class="social-link magnetic-btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>{% endif %}
+            {% if settings.get('linkedin_url') %}<a href="{{ settings.linkedin_url }}" class="social-link magnetic-btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>{% endif %}
+            <a href="mailto:{{ settings.get('email', '') }}" class="social-link magnetic-btn"><i class="fab fa-google"></i></a>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">About Me</span>
+                <h2 class="section-title">Crafting Digital <span class="gradient-text">Experiences</span></h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-image">
+                    <div class="image-wrapper glass-card interactive-image" id="about-image-wrapper">
+                        <img src="/static/profile.jpg" alt="Youssef Khamis Al-Assiuty" class="about-profile-img" id="about-profile-img">
+                        <div class="image-decoration"></div>
+                        <div class="image-glow-effect"></div>
+                        <div class="image-particles"></div>
+                        <div class="image-border-anim"></div>
+                    </div>
+                    {% if settings.get('show_stats', '0') == '1' %}
+                    <div class="experience-badge glass-card floating-badge">
+                        <span class="exp-number">{{ settings.get('stat_years', '0') }}+</span>
+                        <span class="exp-text">Years of Experience</span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p class="lead">{{ settings.get('about_lead', '') }}</p>
+                        <p>{{ settings.get('about_p1', '') }}</p>
+                        <p>{{ settings.get('about_p2', '') }}</p>
+                    </div>
+                    <div class="about-highlights">
+                        <div class="highlight-item glass-card"><div class="highlight-icon"><i class="fas fa-code"></i></div><div class="highlight-content"><h4>Clean Code</h4><p>Writing maintainable, scalable, and well-documented code</p></div></div>
+                        <div class="highlight-item glass-card"><div class="highlight-icon"><i class="fas fa-lightbulb"></i></div><div class="highlight-content"><h4>Creative Solutions</h4><p>Innovative approaches to complex problems</p></div></div>
+                        <div class="highlight-item glass-card"><div class="highlight-icon"><i class="fas fa-rocket"></i></div><div class="highlight-content"><h4>Modern Tech</h4><p>Staying current with latest technologies</p></div></div>
+                    </div>
+                    <div class="about-actions">
+                        {% if settings.get('cv_en_url') %}
+                        <a href="{{ settings.cv_en_url }}" class="btn btn-primary magnetic-btn" target="_blank"><i class="fas fa-download"></i><span>Download CV (EN)</span></a>
+                        {% endif %}
+                        {% if settings.get('cv_ar_url') %}
+                        <a href="{{ settings.cv_ar_url }}" class="btn btn-outline magnetic-btn" target="_blank"><i class="fas fa-download"></i><span>Download CV (AR)</span></a>
+                        {% endif %}
+                        {% if not settings.get('cv_en_url') and not settings.get('cv_ar_url') %}
+                        <a href="#contact" class="btn btn-primary magnetic-btn"><i class="fas fa-envelope"></i><span>Get In Touch</span></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section class="section skills" id="skills">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Expertise</span>
+                <h2 class="section-title">Skills & <span class="gradient-text">Technologies</span></h2>
+                <p class="section-description">A comprehensive toolkit for building exceptional digital products</p>
+            </div>
+            <div class="skills-container">
+                <div class="skills-category">
+                    <h3 class="category-title"><i class="fas fa-star"></i> Primary Focus</h3>
+                    <div class="skills-grid primary-skills">
+                        <div class="skill-card glass-card"><div class="skill-icon"><i class="fab fa-react"></i></div><h4 class="skill-name">React</h4><div class="skill-level"><div class="level-bar"><div class="level-fill" data-level="95"></div></div><span class="level-text">Expert</span></div></div>
+                        <div class="skill-card glass-card"><div class="skill-icon"><i class="fab fa-js-square"></i></div><h4 class="skill-name">TypeScript</h4><div class="skill-level"><div class="level-bar"><div class="level-fill" data-level="90"></div></div><span class="level-text">Expert</span></div></div>
+                        <div class="skill-card glass-card"><div class="skill-icon"><i class="fab fa-react"></i></div><h4 class="skill-name">Next.js</h4><div class="skill-level"><div class="level-bar"><div class="level-fill" data-level="88"></div></div><span class="level-text">Advanced</span></div></div>
+                        <div class="skill-card glass-card"><div class="skill-icon"><i class="fab fa-css3-alt"></i></div><h4 class="skill-name">CSS/Tailwind</h4><div class="skill-level"><div class="level-bar"><div class="level-fill" data-level="95"></div></div><span class="level-text">Expert</span></div></div>
+                        <div class="skill-card glass-card"><div class="skill-icon"><i class="fab fa-js"></i></div><h4 class="skill-name">JavaScript</h4><div class="skill-level"><div class="level-bar"><div class="level-fill" data-level="95"></div></div><span class="level-text">Expert</span></div></div>
+                        <div class="skill-card glass-card"><div class="skill-icon"><i class="fab fa-html5"></i></div><h4 class="skill-name">HTML5</h4><div class="skill-level"><div class="level-bar"><div class="level-fill" data-level="98"></div></div><span class="level-text">Expert</span></div></div>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3 class="category-title"><i class="fas fa-layer-group"></i> Supporting Skills</h3>
+                    <div class="skills-grid supporting-skills">
+                        <div class="skill-card glass-card small"><div class="skill-icon"><i class="fab fa-node-js"></i></div><h4 class="skill-name">Node.js</h4><span class="skill-badge">Backend</span></div>
+                        <div class="skill-card glass-card small"><div class="skill-icon"><i class="fas fa-database"></i></div><h4 class="skill-name">APIs & REST</h4><span class="skill-badge">Integration</span></div>
+                        <div class="skill-card glass-card small"><div class="skill-icon"><i class="fab fa-figma"></i></div><h4 class="skill-name">UI/UX Design</h4><span class="skill-badge">Design</span></div>
+                        <div class="skill-card glass-card small"><div class="skill-icon"><i class="fab fa-git-alt"></i></div><h4 class="skill-name">Git</h4><span class="skill-badge">Version Control</span></div>
+                        <div class="skill-card glass-card small"><div class="skill-icon"><i class="fas fa-cloud"></i></div><h4 class="skill-name">Cloud Services</h4><span class="skill-badge">DevOps</span></div>
+                        <div class="skill-card glass-card small"><div class="skill-icon"><i class="fas fa-mobile-alt"></i></div><h4 class="skill-name">Responsive Design</h4><span class="skill-badge">Mobile-First</span></div>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3 class="category-title"><i class="fas fa-tools"></i> Tools & Platforms</h3>
+                    <div class="tools-marquee"><div class="marquee-content">
+                        <span class="tool-item"><i class="fab fa-github"></i> GitHub</span>
+                        <span class="tool-item"><i class="fab fa-figma"></i> Figma</span>
+                        <span class="tool-item"><i class="fas fa-code"></i> VS Code</span>
+                        <span class="tool-item"><i class="fab fa-npm"></i> npm</span>
+                        <span class="tool-item"><i class="fas fa-terminal"></i> Terminal</span>
+                        <span class="tool-item"><i class="fab fa-docker"></i> Docker</span>
+                        <span class="tool-item"><i class="fas fa-cloud"></i> Vercel</span>
+                        <span class="tool-item"><i class="fas fa-bolt"></i> Vite</span>
+                        <!-- Duplicate for seamless scroll -->
+                        <span class="tool-item"><i class="fab fa-github"></i> GitHub</span>
+                        <span class="tool-item"><i class="fab fa-figma"></i> Figma</span>
+                        <span class="tool-item"><i class="fas fa-code"></i> VS Code</span>
+                        <span class="tool-item"><i class="fab fa-npm"></i> npm</span>
+                        <span class="tool-item"><i class="fas fa-terminal"></i> Terminal</span>
+                        <span class="tool-item"><i class="fab fa-docker"></i> Docker</span>
+                        <span class="tool-item"><i class="fas fa-cloud"></i> Vercel</span>
+                        <span class="tool-item"><i class="fas fa-bolt"></i> Vite</span>
+                    </div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Certificates Section -->
+    {% if certificates|length > 0 %}
+    <section class="section certificates-section" id="certificates">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Education</span>
+                <h2 class="section-title">Certificates & <span class="gradient-text">Courses</span></h2>
+            </div>
+            <div class="certificates-grid">
+                {% for cert in certificates %}
+                <div class="certificate-card glass-card">
+                    <div class="certificate-badge"><i class="fas fa-award"></i></div>
+                    <div class="certificate-content">
+                        <div class="certificate-provider">
+                            <i class="{{ cert.provider_icon }}" style="color: {{ cert.provider_color }};"></i>
+                            <span class="provider-name">{{ cert.provider }}</span>
+                        </div>
+                        <h3 class="certificate-title">{{ cert.title }}</h3>
+                        <p class="certificate-date"><i class="fas fa-calendar-alt"></i><span>{{ cert.date }}</span></p>
+                        <div class="certificate-skills">
+                            {% for skill in cert.skills|replace('[','') |replace(']','') |replace('"','') |split(',') %}
+                            {% if skill.strip() %}<span class="cert-skill-tag">{{ skill.strip() }}</span>{% endif %}
+                            {% endfor %}
+                        </div>
+                        {% if cert.certificate_url %}
+                        <a href="{{ cert.certificate_url }}" class="certificate-link" target="_blank">View Certificate <i class="fas fa-arrow-right"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    
+    <!-- Projects Section -->
+    <section class="section projects" id="projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Portfolio</span>
+                <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
+                <p class="section-description">A showcase of my recent work and experiments</p>
+            </div>
+            {% if projects|length > 0 %}
+            <div class="projects-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="frontend">Frontend</button>
+                <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+                <button class="filter-btn" data-filter="ui">UI/UX</button>
+            </div>
+            <div class="projects-grid-new">
+                {% for p in projects %}
+                <div class="project-card-new glass-card" data-category="{{ p.category }}" data-project-id="{{ p.id }}">
+                    <div class="project-card-inner">
+                        <div class="project-card-shine"></div>
+                        <div class="project-image-new">
+                            {% if p.image_url %}
+                            <img src="{{ p.image_url }}" alt="{{ p.title }}" style="width:100%;height:100%;object-fit:cover;">
+                            {% else %}
+                            <div class="project-placeholder {{ p.gradient }}"><i class="{{ p.icon }}"></i></div>
+                            {% endif %}
+                            <div class="project-overlay-new">
+                                <button class="view-project-btn magnetic-btn" data-project="{{ p.id }}"><i class="fas fa-expand"></i><span>View Details</span></button>
+                            </div>
+                        </div>
+                        <div class="project-content-new">
+                            <div class="project-tags-new">
+                                {% for tag in p.tags|replace('[','') |replace(']','') |replace('"','') |split(',') %}
+                                {% if tag.strip() %}<span class="tag-new">{{ tag.strip() }}</span>{% endif %}
+                                {% endfor %}
+                            </div>
+                            <h3 class="project-title-new">{{ p.title }}</h3>
+                            <p class="project-desc-new">{{ p.description }}</p>
+                            <div class="project-links-new">
+                                {% if p.github_url %}<a href="{{ p.github_url }}" class="project-link-new" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>{% endif %}
+                                {% if p.live_url %}<a href="{{ p.live_url }}" class="project-link-new" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i></a>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="glass-card" style="text-align:center;padding:3rem;">
+                <i class="fas fa-folder-open" style="font-size:2rem;color:var(--accent-primary);margin-bottom:1rem;display:block;"></i>
+                <p style="color:var(--text-secondary);">Projects are being prepared. Check back soon!</p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+    
+    <!-- Project Modal -->
+    <div class="project-modal" id="project-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content glass-card">
+            <button class="modal-close-btn" id="modal-close"><i class="fas fa-times"></i></button>
+            <div class="modal-body">
+                <div class="modal-media">
+                    <div class="modal-video-placeholder"><i class="fas fa-image"></i><span>Project Preview</span></div>
+                </div>
+                <div class="modal-info">
+                    <h2 class="modal-title" id="modal-title">Project</h2>
+                    <div class="modal-tags" id="modal-tags"></div>
+                    <p class="modal-description" id="modal-description"></p>
+                    <div class="modal-features" id="modal-features"></div>
+                    <div class="modal-actions">
+                        <a href="#" class="btn btn-primary magnetic-btn modal-link-live" id="modal-link-live" style="display:none;" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i><span>Live Demo</span></a>
+                        <a href="#" class="btn btn-secondary magnetic-btn modal-link-code" id="modal-link-code" style="display:none;" target="_blank" rel="noopener"><i class="fab fa-github"></i><span>View Code</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Process Section -->
+    <section class="section process" id="process">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">How I Work</span>
+                <h2 class="section-title">My <span class="gradient-text">Process</span></h2>
+            </div>
+            <div class="process-timeline">
+                <div class="timeline-line"></div>
+                <div class="process-step" data-step="1"><div class="step-marker"><div class="marker-inner"><i class="fas fa-lightbulb"></i></div></div><div class="step-content glass-card"><span class="step-number">01</span><h3>Discovery</h3><p>Understanding your vision, goals, and requirements through detailed discussions.</p></div></div>
+                <div class="process-step" data-step="2"><div class="step-marker"><div class="marker-inner"><i class="fas fa-pencil-ruler"></i></div></div><div class="step-content glass-card"><span class="step-number">02</span><h3>Design</h3><p>Creating wireframes and visual designs that align with your brand.</p></div></div>
+                <div class="process-step" data-step="3"><div class="step-marker"><div class="marker-inner"><i class="fas fa-code"></i></div></div><div class="step-content glass-card"><span class="step-number">03</span><h3>Development</h3><p>Building with clean, scalable code using modern technologies.</p></div></div>
+                <div class="process-step" data-step="4"><div class="step-marker"><div class="marker-inner"><i class="fas fa-flask"></i></div></div><div class="step-content glass-card"><span class="step-number">04</span><h3>Testing</h3><p>Rigorous testing across devices and browsers for quality.</p></div></div>
+                <div class="process-step" data-step="5"><div class="step-marker"><div class="marker-inner"><i class="fas fa-rocket"></i></div></div><div class="step-content glass-card"><span class="step-number">05</span><h3>Delivery</h3><p>Launching with documentation and ongoing support.</p></div></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials (only if enabled and has real testimonials) -->
+    {% if settings.get('show_testimonials', '0') == '1' and testimonials|length > 0 %}
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Testimonials</span>
+                <h2 class="section-title">What Clients <span class="gradient-text">Say</span></h2>
+            </div>
+            <div class="testimonials-carousel">
+                <div class="carousel-container" id="testimonials-container">
+                    {% for t in testimonials %}
+                    <div class="testimonial-card glass-card {% if loop.first %}active{% endif %}">
+                        <div class="testimonial-content">
+                            <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                            <p class="testimonial-text">"{{ t.text }}"</p>
+                            <div class="testimonial-rating">{% for i in range(t.rating) %}<i class="fas fa-star"></i>{% endfor %}</div>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar"><i class="fas fa-user"></i></div>
+                            <div class="author-info"><h4>{{ t.name }}</h4><span>{{ t.title }}</span></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev magnetic-btn"><i class="fas fa-arrow-left"></i></button>
+                    <div class="carousel-dots">{% for t in testimonials %}<span class="dot {% if loop.first %}active{% endif %}"></span>{% endfor %}</div>
+                    <button class="carousel-btn next magnetic-btn"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    
+    <!-- Social Media Section -->
+    <section class="section social-media" id="blog">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Follow Me</span>
+                <h2 class="section-title">Connect on <span class="gradient-text">Social Media</span></h2>
+            </div>
+            <div class="social-media-grid">
+                {% if settings.get('linkedin_url') %}
+                <a href="{{ settings.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="social-media-card glass-card" style="--social-color: #0A66C2;">
+                    <div class="social-card-inner"><div class="social-icon-large" style="background: linear-gradient(135deg, #0A66C2, #004182);"><i class="fab fa-linkedin-in"></i></div><div class="social-card-content"><h3>LinkedIn</h3><p>Professional Network</p><span class="social-follow-btn"><i class="fas fa-plus"></i> Connect</span></div></div>
+                </a>
+                {% endif %}
+                {% if settings.get('facebook_url') %}
+                <a href="{{ settings.facebook_url }}" target="_blank" rel="noopener noreferrer" class="social-media-card glass-card facebook-card">
+                    <div class="social-card-inner"><div class="social-icon-large"><i class="fab fa-facebook-f"></i></div><div class="social-card-content"><h3>Facebook</h3><p>@yousef.khames.mohamed</p><span class="social-follow-btn"><i class="fas fa-plus"></i> Follow</span></div><div class="social-card-glow"></div></div>
+                </a>
+                {% endif %}
+                {% if settings.get('instagram_url') %}
+                <a href="{{ settings.instagram_url }}" target="_blank" rel="noopener noreferrer" class="social-media-card glass-card instagram-card">
+                    <div class="social-card-inner"><div class="social-icon-large"><i class="fab fa-instagram"></i></div><div class="social-card-content"><h3>Instagram</h3><p>@yousef_khames_mohamed</p><span class="social-follow-btn"><i class="fas fa-plus"></i> Follow</span></div><div class="social-card-glow"></div></div>
+                </a>
+                {% endif %}
+                {% if settings.get('tiktok_url') %}
+                <a href="{{ settings.tiktok_url }}" target="_blank" rel="noopener noreferrer" class="social-media-card glass-card tiktok-card">
+                    <div class="social-card-inner"><div class="social-icon-large"><i class="fab fa-tiktok"></i></div><div class="social-card-content"><h3>TikTok</h3><p>@yousef_khames_elasuoty</p><span class="social-follow-btn"><i class="fas fa-plus"></i> Follow</span></div><div class="social-card-glow"></div></div>
+                </a>
+                {% endif %}
+                <a href="mailto:{{ settings.get('email', '') }}" class="social-media-card glass-card gmail-card">
+                    <div class="social-card-inner"><div class="social-icon-large"><i class="fab fa-google"></i></div><div class="social-card-content"><h3>Gmail</h3><p>{{ settings.get('email', '') }}</p><span class="social-follow-btn"><i class="fas fa-envelope"></i> Contact</span></div><div class="social-card-glow"></div></div>
+                </a>
+                {% if settings.get('github_url') %}
+                <a href="{{ settings.github_url }}" target="_blank" rel="noopener noreferrer" class="social-media-card glass-card github-card">
+                    <div class="social-card-inner"><div class="social-icon-large"><i class="fab fa-github"></i></div><div class="social-card-content"><h3>GitHub</h3><p>View Code</p><span class="social-follow-btn"><i class="fas fa-code"></i> Follow</span></div><div class="social-card-glow"></div></div>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Get In Touch</span>
+                <h2 class="section-title">Let's <span class="gradient-text">Work Together</span></h2>
+                <p class="section-description">Ready to bring your ideas to life? Let's discuss your project.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="info-card glass-card">
+                        <div class="info-icon"><i class="fab fa-google"></i></div>
+                        <div class="info-content"><h4>Gmail</h4><a href="mailto:{{ settings.get('email', '') }}">{{ settings.get('email', '') }}</a></div>
+                    </div>
+                    <div class="info-card glass-card">
+                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="info-content"><h4>Location</h4><p>{{ settings.get('location', 'Available Worldwide') }}</p></div>
+                    </div>
+                    <div class="info-card glass-card">
+                        <div class="info-icon"><i class="fas fa-calendar-check"></i></div>
+                        <div class="info-content"><h4>Availability</h4><p>{{ settings.get('availability', 'Open for work') }}</p></div>
+                    </div>
+                    <div class="social-links-contact">
+                        <h4>Connect With Me</h4>
+                        <div class="social-icons">
+                            {% if settings.get('facebook_url') %}<a href="{{ settings.facebook_url }}" class="social-icon magnetic-btn" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>{% endif %}
+                            {% if settings.get('instagram_url') %}<a href="{{ settings.instagram_url }}" class="social-icon magnetic-btn" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>{% endif %}
+                            {% if settings.get('tiktok_url') %}<a href="{{ settings.tiktok_url }}" class="social-icon magnetic-btn" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>{% endif %}
+                            {% if settings.get('linkedin_url') %}<a href="{{ settings.linkedin_url }}" class="social-icon magnetic-btn" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>{% endif %}
+                            <a href="mailto:{{ settings.get('email', '') }}" class="social-icon magnetic-btn"><i class="fab fa-google"></i></a>
+                        </div>
+                    </div>
+                    {% if settings.get('calendly_url') %}
+                    <div class="calendly-section glass-card">
+                        <div class="calendly-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <h4>Schedule a Call</h4>
+                        <p>Book a 30-minute discovery call.</p>
+                        <a href="{{ settings.calendly_url }}" target="_blank" class="btn btn-outline magnetic-btn"><span>Book a Call</span><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="contact-form-container glass-card">
+                    <h3>Request a Quote</h3>
+                    <form class="quote-form" id="quote-form" novalidate>
+                        <div class="form-row">
+                            <div class="form-group"><label for="name">Your Name *</label><input type="text" id="name" name="name" required placeholder="Your name" autocomplete="name" maxlength="100"><span class="error-message"></span></div>
+                            <div class="form-group"><label for="email">Email Address *</label><input type="email" id="email" name="email" required placeholder="your@email.com" autocomplete="email" maxlength="254"><span class="error-message"></span></div>
+                        </div>
+                        <div class="form-group"><label for="service">Service Type *</label><select id="service" name="service" required><option value="">Select a service</option><option value="web-development">Web Development</option><option value="frontend">Frontend Development</option><option value="ui-ux">UI/UX Design</option><option value="fullstack">Full Stack Project</option><option value="consulting">Technical Consulting</option><option value="other">Other</option></select><span class="error-message"></span></div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="budget">Budget Range *</label><select id="budget" name="budget" required><option value="">Select budget</option><option value="500-1000">$500 - $1,000</option><option value="1000-2500">$1,000 - $2,500</option><option value="2500-5000">$2,500 - $5,000</option><option value="5000-10000">$5,000 - $10,000</option><option value="10000+">$10,000+</option></select><span class="error-message"></span></div>
+                            <div class="form-group"><label for="timeline">Timeline *</label><select id="timeline" name="timeline" required><option value="">Select timeline</option><option value="1-2-weeks">1-2 weeks</option><option value="2-4-weeks">2-4 weeks</option><option value="1-2-months">1-2 months</option><option value="2-3-months">2-3 months</option><option value="3-months+">3+ months</option></select><span class="error-message"></span></div>
+                        </div>
+                        <div class="form-group"><label for="message">Project Details *</label><textarea id="message" name="message" required rows="5" placeholder="Tell me about your project..." maxlength="2000"></textarea><span class="error-message"></span></div>
+                        <button type="submit" class="btn btn-primary btn-full magnetic-btn"><span>Send Request</span><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="newsletter-section glass-card">
+                <div class="newsletter-content"><div class="newsletter-icon"><i class="fas fa-paper-plane"></i></div><div class="newsletter-text"><h3>Stay Updated</h3><p>Subscribe for tips, articles, and project updates.</p></div></div>
+                <form class="newsletter-form" id="newsletter-form" novalidate><input type="email" placeholder="Enter your email" required autocomplete="email" maxlength="254"><button type="submit" class="btn btn-primary magnetic-btn"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#home" class="footer-logo"><span class="logo-text">YK</span><span class="logo-dot"></span></a>
+                    <p>Building exceptional digital experiences with passion and precision.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column"><h4>Navigation</h4><a href="#home">Home</a><a href="#about">About</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div>
+                    <div class="footer-column"><h4>Services</h4><a href="#contact">Web Development</a><a href="#contact">Frontend Dev</a><a href="#contact">UI/UX Design</a><a href="#contact">Consulting</a></div>
+                    <div class="footer-column"><h4>Connect</h4>
+                        {% if settings.get('linkedin_url') %}<a href="{{ settings.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>{% endif %}
+                        {% if settings.get('facebook_url') %}<a href="{{ settings.facebook_url }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+                        {% if settings.get('instagram_url') %}<a href="{{ settings.instagram_url }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+                        <a href="mailto:{{ settings.get('email', '') }}">Gmail</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; {{ settings.get('footer_year', '2026') }} Youssef Khamis Al-Assiuty. All rights reserved. | {{ settings.get('site_version', 'v1.0') }} | Last updated: {{ settings.get('last_updated', '') }}</p>
+                <!-- Admin access -->
+                <a href="/admin/login" style="font-size:0.7rem;color:var(--text-muted);text-decoration:none;opacity:0.3;" title="Admin">
+                    <i class="fas fa-lock"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="toast-container" id="toast-container"></div>
+    
+    <div class="easter-egg-overlay" id="easter-egg">
+        <div class="easter-egg-content"><h2>You Found It!</h2><p>Thanks for exploring!</p><button class="btn btn-primary" onclick="closeEasterEgg()">Continue</button></div>
+    </div>
+    
+    <div class="music-player" id="music-player">
+        <button class="music-btn magnetic-btn" id="music-toggle" aria-label="Toggle Music">
+            <i class="fas fa-volume-up" id="music-icon"></i>
+            <div class="music-waves" id="music-waves"><span></span><span></span><span></span><span></span></div>
+        </button>
+    </div>
+    <audio id="background-music" loop preload="auto"><source src="/static/music.mp3" type="audio/mpeg"></audio>
+    
+    <nav class="bottom-nav" id="bottom-nav">
+        <a href="#home" class="bottom-nav-item active" data-section="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="#about" class="bottom-nav-item" data-section="about"><i class="fas fa-user"></i><span>About</span></a>
+        <a href="#projects" class="bottom-nav-item" data-section="projects"><i class="fas fa-folder"></i><span>Work</span></a>
+        <a href="#contact" class="bottom-nav-item" data-section="contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
+    </nav>
+    
+    <!-- Pass project data to JS -->
+    <script>
+    window.PROJECTS_DATA = {
+        {% for p in projects %}
+        {{ p.id }}: {
+            title: {{ p.title|tojson }},
+            tags: {{ p.tags|safe if p.tags else '[]' }},
+            description: {{ p.description|tojson }},
+            features: {{ p.features|safe if p.features else '[]' }},
+            live_url: {{ p.live_url|tojson }},
+            github_url: {{ p.github_url|tojson }}
+        }{{ ',' if not loop.last }}
+        {% endfor %}
+    };
+    </script>
+    <script src="/static/app.js"></script>
+</body>
+</html>
